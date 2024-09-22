@@ -1,25 +1,26 @@
 import { useState } from "react";
 
 function TicTac() {
-  const [value, setValue] = useState("");
-  const boxesArr = Array(9).fill(value);
+  const [board, setBoard] = useState(Array(9).fill(null));
+  const [currentPlayer, setPlayer] = useState("X");
 
-  const updateValue = (index: any) => {
-    const update = [...boxesArr];
-    console.log(update);
-    update[index] = setValue("X");
-
-    console.log(index);
-  };
+  function updateValue(index: number) {
+    const arr = [...board];
+    if (arr[index] == null) {
+      arr[index] = currentPlayer;
+      setPlayer(currentPlayer === "X" ? "O" : "X");
+      setBoard(arr);
+    }
+  }
 
   return (
     <>
       <h1 className="mb-20 font-semibold">TIC-TAC-TOE</h1>
-      <div className="bg-purple-700 rounded-2xl grid grid-cols-3 gap-4 p-10">
-        {boxesArr.map((element, index) => (
+      <div className="bg-purple-700 rounded-2xl grid grid-cols-3 gap-4 p-6">
+        {board.map((element, index) => (
           <div
             key={index}
-            className="bg-black w-20 h-20 flex items-center justify-center border border-black rounded-2xl text-white"
+            className="bg-black w-20 h-20 flex items-center justify-center border border-black rounded-full text-white font-bold text-3xl"
             onClick={() => updateValue(index)}
           >
             <p>{element}</p>
