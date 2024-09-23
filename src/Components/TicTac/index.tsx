@@ -2,14 +2,18 @@ import { useState } from "react";
 
 function TicTac() {
   const [board, setBoard] = useState(Array(9).fill(null));
-  const [currentPlayer, setPlayer] = useState("X");
+  const [currentPlayer, setPlayer] = useState("✔");
 
   function updateValue(index: number) {
     const arr = [...board];
     if (arr[index] == null) {
       arr[index] = currentPlayer;
-      setPlayer(currentPlayer === "X" ? "O" : "X");
+      setPlayer(currentPlayer === "✔" ? "✖" : "✔");
       setBoard(arr);
+    }
+    const checkBox = arr[0] && arr[1] && arr[2] === "✔";
+    if (checkBox) {
+      alert("You won");
     }
   }
 
