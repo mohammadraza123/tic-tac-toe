@@ -3,19 +3,45 @@ import { useState } from "react";
 function TicTac() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [currentPlayer, setPlayer] = useState("✔");
+  const [winner, setWinner] = useState(null);
 
   function updateValue(index: number) {
     const arr = [...board];
-    if (arr[index] == null) {
-      arr[index] = currentPlayer;
+
+    if (winner || board[index] !== null) return;
+    arr[index] = currentPlayer;
+    setPlayer(currentPlayer === "✔" ? "✖" : "✔");
+    setBoard(arr);
+    const result = checkWinner(arr);
+    if (result) {
+      setWinner(result);
+    } else {
       setPlayer(currentPlayer === "✔" ? "✖" : "✔");
-      setBoard(arr);
-    }
-    const checkBox = arr[0] && arr[1] && arr[2] === "✔";
-    if (checkBox) {
-      alert("You won");
     }
   }
+
+  const checkWinner = (board: any) => {
+    const combination = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (let i = 0; i < combination.length; i++) {
+      const [a, b, c] = combination[i];
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        console.log(true);
+        return board[a];
+      }
+    }
+    console.log(false);
+    return null;
+  };
 
   return (
     <>
@@ -31,6 +57,7 @@ function TicTac() {
           </div>
         ))}
       </div>
+      {winner}
     </>
   );
 }
