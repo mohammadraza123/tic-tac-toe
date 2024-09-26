@@ -21,7 +21,7 @@ function TicTac() {
           title: "Winner!",
           text: `Player ${result} wins!`,
           icon: "success",
-          buttons: "Play Again",
+          buttons: ["Play Again", true],
         }).then(() => {
           handleReset();
         });
@@ -32,7 +32,7 @@ function TicTac() {
           title: "It's a Tie!",
           text: "No one wins.",
           icon: "warning",
-          buttons: [true],
+          buttons: [false, true],
         }).then(() => {
           handleReset();
         });
